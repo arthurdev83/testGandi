@@ -1,0 +1,373 @@
+{extends file="layout.tpl"}
+
+{* Page Title *}
+{block name='no-return-functions' append}
+    {$page_title = {config key="store_name"}}
+{/block}
+
+{* Main content *}
+{block name="main-content"}
+
+<!--SECTION HEADER -->
+<div class="section-0">
+
+        {form name="thelia.front.customer.login"}
+            {form_hidden_fields}
+
+
+            {/form}
+    <div class="nav-logo">
+        <div class="logo"></div>
+        <div class="menu"><span class="flaticon-ticket ticket"></span><span class="lbl">réserver</span></div>
+    </div>
+        <div class="panel panel-w0">
+            <div class="menu menu-close menu-open"><span class="flaticon-ticket ticket"></span><span class="lbl">réserver</span></div>
+            <i class="flaticon-cancel menu-close close-ico"></i>
+        <div class="bottom-panel"></div>
+    </div>
+    <div class="product product-w0">
+        <div class="title-1">choisissez<br><span>votre offre</span></div>  
+        <div class="title-2">nombre de passagers</div>
+        <div class="custom_range">
+        <div class="point point-0 point-active" opid="1"><h4>1</h4></div>
+        <div class="point point-1" opid="2"><h4>2</h4></div>
+        <div class="point point-2" opid="3"><h4>3</h4></div>
+        <div class="point point-3" opid="4"><h4>4</h4></div>
+        <div class="point point-4" opid="5"><h4>5</h4></div>
+        <div class="point point-5" opid="6"><h4>6</h4></div>
+        </div>
+        <div class="prixpassager"><div class="title">prix/passager:</div><div class="nbr">199€</div></div>
+        <div class="prixtotal"><div class="title">total:</div><div class="nbr">199€</div></div>
+       
+        {$product_id = '1'}
+        {loop name="product.details" type="product" id=$product_id limit="1"}
+        {$pse_count=$PSE_COUNT}
+        <!--FORM PRODUCT-->
+        {form name="thelia.cart.add" }
+        <form id="form-product-details" class="form-product">
+            {form_hidden_fields}
+            <input type="hidden" name="view" value="product">
+            <input type="hidden" name="product_id" value="{$ID}">
+            {form_field field="append"}
+                <input type="hidden" name="{$name}" value="1">
+            {/form_field}
+            {form_field form=$form field="success_url"}
+                <input type="hidden" name="{$name}" value="{url path='/cart'}">
+            {/form_field}
+
+            {if $form_error}<div class="alert alert-error">{$form_error_message}</div>{/if}
+
+            {form_field field="product"}
+                <input id="{$label_attr.for}" type="hidden" name="{$name}" value="{$ID}" {$attr} >
+            {/form_field}
+
+            {* pse *}
+            {form_field field='product_sale_elements_id'}
+            <input id="pse-id" class="pse-id" type="hidden" name="{$name}" value="{$PRODUCT_SALE_ELEMENT}" {$attr} >
+            {/form_field}
+
+            <select name="id" id="ProductSelect-0" class="hidden">
+                {loop type="product_sale_elements" product="{$product_id}" name="the-loop-name"}
+                    {loop name="combi" type="attribute_combination" product_sale_elements="$ID"}
+                        <option price="{$TAXED_PRICE}" value="{$ID}" id="option_{$ATTRIBUTE_AVAILABILITY_TITLE}">
+                            {$ATTRIBUTE_AVAILABILITY_TITLE}
+                        </option>
+                    {/loop}
+                {/loop}
+            </select>
+
+                {form_field field='quantity'}
+                <div class="hidden form-group group-qty">
+                    <input type="number" name="{$name}" id="{$label_attr.for}" class="form-control" value="{$value|default:1}" min="1" required>
+                </div>
+                {/form_field}
+
+                <button type="submit" name="add" id="AddToCart-0" class="button-reserver h50-btn">
+                        <span>valider</span>
+                </button>
+        </form>
+        {/form}
+        {/loop}
+        <!--END FORM-->
+    </div>
+</div>
+
+<!--SECTION 1-->
+<div class="section-1">
+    <img id="helico" class="helico" src="{image file='assets/dist/img/copter.png'}">
+	<div class="content">
+      <div class="title-1">tour en hélicoptère</div>
+      <div class="title-2"><span>paris</span>-versailles</div>
+      <div class="title-3">Vivez une expérience d'1h30 dont <span>25min de vol</span> en hélicoptère<br>pour une découverte de Paris et Versailles depuis le ciel</div>
+      <div class="button-groupe open-menu">
+      	<div class="button-reserver"><span>réservez maintenant</span></div>
+        <div class="price-reserver"><span class="lbl">à partir de <span class="lbly">195€</span> /pers</span></div>
+      </div>
+
+  	</div>
+  <div class="savoirplus">en savoir plus<br><i class="flaticon-arrow-down-sign-to-navigate"></i></div>
+  <div class="footer-section-1">
+    <div class="footer-content">
+      <div class="element"><i class="flaticon-agenda"></i><br>durée totale : 1h30</div>
+      <div class="element"><i class="flaticon-helicopter"></i><br>25 min de vol</div>
+      <div class="element"><i class="flaticon-placeholder"></i><br>61 rue henry farman, paris</div>
+    </div>
+  </div>
+</div>
+
+<!--SECTION 2-->
+<div class="section-2">
+    <div class="left">
+    
+      <div class="title-1">avec helipass.com</div>
+      <div class="title-2"><span>paris</span>-<br>versailles</div>
+      <div class="title-3">
+      Au départ de l'Héliport de Paris, 
+      embarquez à bord d’un hélicoptère 
+      bimoteur Airbus H135 de 6 places, 
+      pour une découverte de l’ouest 
+      parisien vu du ciel.
+      </div>
+      <div class="title-4">
+        1H30 d’expérience magique<br>dont <span>25 min de vol</span> inoubliable.
+      </div>    
+      <div class="button-reserver open-menu"><span>réservez maintenant</span></div>
+    </div>
+    <div class="right"></div>
+</div>
+
+<!--SECTION 3-->
+<div class="section-3">
+    <div class="map">
+        <img src="{image file='assets/dist/img/map.png'}">
+    </div>
+    <div class="rect-crop"></div>
+    <div class="button-reserver open-menu"><span>réservez maintenant</span></div>
+    <div class="left-content">
+      <div class="title-1">La plus belle vue de paris</div>
+      <div class="title-2">visualisez <span>l’itinéraire</span></div>
+      <p class="txt-1">
+        Vous profitez du panorama : <span>Rives ouest de la Seine, Parc des Princes, 
+        Bois de Boulogne, Hippodrome de Longchamp, Parc de Saint-Cloud </span>
+        ainsi que <span>Versailles</span> et les <span>Jardins du Roi Soleil</span>.
+      </p>
+      <p class="txt-1">
+        Après le <span>survol de Paris</span> et de <span>ses monuments</span>, dirigez vous vers 
+        le <span>Château de Versailles</span>. Vous vous poserez derrière le Château, 
+        sur l’<span>aérodrome</span> de St-Cyr-l’école.
+      </p>
+      <p class="txt-1">
+        Partagez un <span>moment unique</span> et <span>chaleureux</span> avec votre commandant 
+        de bord, c’est l’occasion d’<span>échanger sur l’univers de l’hélicoptère</span> 
+        et de <span>prendre des photos</span>.
+      </p>
+      <p class="txt-1">
+        Du <span>Trocadéro</span> à la <span>Tour Montparnasse</span>, 
+        vous terminerez par un aperçu « plein champ » 
+        de la grande <span>Tour Eiffel</span>.
+      </p>
+    </div>
+</div>
+
+<!--SECTION 4-->
+<div class="section-4">
+    <div class="head">
+      <div class="title-groupe">
+        <div class="title-1">découvrez l'hélicoptère</div>
+        <div class="title-2">airbus <span>h135</span></div>
+      </div>
+    </div>
+    
+    <div class="main">
+        <div class="fixed-tooltip op-0">
+            <div class="content">
+                <div class="pick"></div>
+                <div class="tooltip--left">
+                    <img src="{image file='assets/dist/img/tech-1.png'}" class="tooltip--img">
+                </div>
+                <div class="tooltip--right">
+                <div class="tooltip--infos">
+                    <div class="tooltip--title"></div>
+                    <div class="tooltip--desc"></div>
+                </div>
+                </div>
+            </div>
+        </div>
+      <div class="big-logo"></div>
+      <div class="right"></div>
+      <div>
+      <div class="btn-shop"><div class="button-reserver open-menu"><span>réservez maintenant</span></div></div>
+  
+      <div class="helico-anim">
+          <img src="{image file='assets/dist/img/helicopter-isolated.png'}">
+        <div class="helicopoint">
+          <div class="tool-tip scale-0">
+            <div class="content">
+                <div class="pick"></div>
+              <div class="tooltip--left">
+                  <img src="{image file='assets/dist/img/tech-1.png'}" class="tooltip--img">
+              </div>
+              <div class="tooltip--right">
+                <div class="tooltip--infos">
+                  <div class="tooltip--title"></div>
+                  <div class="tooltip--desc"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="points">
+            <div class="groupe">
+              <div class="point" data-img="{image file='assets/dist/img/tech-1.png'}" pos-l="18" pos-t="52" data-title="Lorem ipsum" data-desc="sdfj uisdfhdufhsdf dfsdf dfsdfi iez ieizeir zeirzie er zerzerzer sdf"></div>
+              <div class="point" data-img="{image file='assets/dist/img/tech-1.png'}" pos-l="55" pos-t="12" data-title="Lorem ipsum" data-desc="sdfj uisdfhdufhsdf dfsdf dfsdfi iez ieizeir zeirzie er zerzerzer sdf"></div>
+              <div class="point" data-img="{image file='assets/dist/img/tech-1.png'}" pos-l="91" pos-t="48" data-title="Lorem ipsum" data-desc="sdfj uisdfhdufhsdf dfsdf dfsdfi iez ieizeir zeirzie er zerzerzer sdf"></div>
+              <div class="point" data-img="{image file='assets/dist/img/tech-1.png'}" pos-l="46" pos-t="57" data-title="Lorem ipsum" data-desc="sdfj uisdfhdufhsdf dfsdf dfsdfi iez ieizeir zeirzie er zerzerzer sdf"></div>
+              <div class="point" data-img="{image file='assets/dist/img/tech-1.png'}" pos-l="60" pos-t="33" data-title="Lorem ipsum" data-desc="sdfj uisdfhdufhsdf dfsdf dfsdfi iez ieizeir zeirzie er zerzerzer sdf"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+</div>
+
+<!--SECTION 5-->
+<div class="section-5">
+              
+
+    <div class="big-logo"></div>
+    <div id="slider" class="content">
+        <div class="arrow-prev control_prev"><i class="flaticon-arrowhead-thin-outline-to-the-left"></i></div>
+        <div class="arrow-next control_next"><i class="flaticon-arrow-point-to-right"></i></div>
+<div id="slide1" class="slider-element">
+    <div class="left">
+        <div class="one"></div>
+        <div class="two">
+        <div class="content">
+            <i class="flaticon-heart back-logo"></i>
+            <div class="title-groupe">
+            <div class="title-1">avec helipass</div>
+            <div class="title-2">vous allez<br><span>adorer</span></div>
+            <div class="title-3">
+                <div class="args">Avoir une vue incroyable<br>sur cette magnifique ville</div>
+                <div class="args">Le Château de Versailles<br>et les jardins du Roi Soleil</div>
+                <div class="args">La Tour Eiffel</div>
+                <div class="args">Les rives de la Seine</div>
+            </div>
+            </div>
+            <div class="shop-btn"><div class="button-reserver open-menu"><span>réservez maintenant</span></div></div>
+        </div>
+        </div>     
+    </div>
+    </div>
+<div id="slide2" class="slider-element opa-0">
+    <div class="right">
+        <div class="one"></div>
+        <div class="two">
+        <div class="content">
+        <i class="flaticon-shield back-logo"></i>
+            <div class="title-groupe">
+            <div class="title-1">pour votre sécurité</div>
+            <div class="title-2">vous devez<br><span>savoir</span></div>
+            <div class="title-3">
+                <div class="args">Un justificatif d'identité<br>vous sera demandé avant le vol</div>
+                <div class="args">Arrivée 30 min avant le vol pour<br>les formalités d'embarquement</div>
+                <div class="args">Tous nos opérateurs possèdent<br>un numéro d'agrément</div>
+                <div class="args">Pour votre sécurité, les conditions<br>météo peuvent décaler votre vol</div>
+            </div>
+            </div>
+        </div>
+
+        </div>     
+    </div>
+</div>
+    </div>
+</div>
+
+<!--SECTION 6-->
+<div class="section-6">
+    <div class="content">
+        <div class="zone">
+        <div class="left">
+            <div class="container">
+            <div class="title-groupe">
+                <div class="title-1">sur helipass.com</div>
+                <div class="title-2">vous<br>aimerez<br><span>aussi</span></div>
+                <div class="desc">
+                <span>Helipass</span> vous propose plus de <span>130 vols en hélicoptères partout dans le monde.</span>
+                Où que vous soyez, il existe une destination Helipass. 
+                <br><br>
+                Découvrez de nouvelles expériences, la terre est belle vue du ciel !
+                </div>
+            </div>
+            <div class="btn-groupe">
+                <a target="_blank" href="https://helipass.com">
+                    <div class="discover">
+                    <span>découvrir helipass.com</span>
+                    </div>
+                </a>
+            </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="top">
+            <div class="top-left">
+                <div class="container">
+                    <div class="product">
+                        <img class="img" src="{image file='assets/dist/img/product-img.png'}">
+                        <div class="look"><i class="flaticon-view"></i></div>
+                        <div class="info"></div>
+                    <div class="title-groupe">
+                        <div class="title-1">5<i class="flaticon-lock"></i></div>  
+                        <div class="title-2">3 250€</div>
+                        <div class="title-3">chateau d'esclimont</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="container">
+                    <div class="product">
+                        <img class="img" src="{image file='assets/dist/img/product-img.png'}">
+                        <div class="look"><i class="flaticon-view"></i></div>
+                        <div class="info"></div>
+                    <div class="title-groupe">
+                        <div class="title-1">5<i class="flaticon-lock"></i></div>  
+                        <div class="title-2">3 250€</div>
+                        <div class="title-3">chateau d'esclimont</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="bottom">
+                <div class="container">
+                    <div class="product">
+                        <img class="img" src="{image file='assets/dist/img/product-img-2.png'}">
+                        <div class="look"><i class="flaticon-view"></i> découvrir</div>
+                        <div class="info-large"></div>
+                    <div class="title-groupe">
+                        <div class="title-1">5<i class="flaticon-lock"></i></div>  
+                        <div class="title-2">3 250€</div>
+                        <div class="title-3">Paris Château de Versailles grand tour</div>
+                    </div>
+                    </div>
+            </div>
+            </div>
+        </div>        
+        </div>
+    </div>
+</div>
+
+{/block}
+
+{block name="stylesheet"}
+{hook name="home.stylesheet"}
+{/block}
+
+{block name="after-javascript-include"}
+{hook name="home.after-javascript-include"}
+{/block}
+
+{block name="javascript-initialization"}
+{hook name="home.javascript-initialization"}
+{/block}
